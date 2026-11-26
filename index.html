@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QWER 굿즈 카탈로그 · 당근 판매</title>
+<meta name="description" content="QWER 굿즈 정리 판매 카탈로그 — 응원 피켓 · 포토카드 · ID카드 · 네컷사진">
+<meta property="og:title" content="QWER 굿즈 카탈로그">
+<meta property="og:description" content="응원 피켓 2종 · 포토카드 46종 · ID카드·렌티큘러 6종 · 네컷사진 5종">
+<style>
+  :root{
+    --ink:#15121a; --ink-2:#4b4653; --ink-3:#8a8496;
+    --line:#ece8f1; --line-2:#e0d8ee;
+    --bg:#fbfafc; --card:#fff;
+    --brand:#7b4bd6; --brand-2:#e0559b;
+    --ok-bg:#e4f7ee; --ok-fg:#0a7a52;
+    --hold-bg:#fff3d6; --hold-fg:#946200;
+    --r:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{
+    font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:88px;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 14px 32px}
+  button{font:inherit;color:inherit;cursor:pointer}
+
+  /* header */
+  header.top{background:linear-gradient(180deg,#fdfcfe,#fbfafc)}
+  .top-in{max-width:920px;margin:0 auto;padding:12px 14px 0}
+  .stickybar{position:sticky;top:0;z-index:30;background:rgba(251,250,252,.95);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);padding-bottom:6px}
+  .stickybar .top-in{padding-top:8px;padding-bottom:0}
+  .brandrow{display:flex;align-items:center;gap:10px}
+  .logo{width:36px;height:36px;border-radius:11px;flex:none;color:#fff;font-weight:800;font-size:13px;
+    display:flex;align-items:center;justify-content:center;letter-spacing:-.5px;
+    background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 4px 12px rgba(123,75,214,.28)}
+  h1{font-size:18px;margin:0;letter-spacing:-.6px;font-weight:800;line-height:1.25}
+  .sub{font-size:11.5px;color:var(--ink-3);margin:1px 0 0}
+  .prices{display:flex;gap:6px;overflow-x:auto;padding:10px 0 0;scrollbar-width:none}
+  .prices::-webkit-scrollbar{display:none}
+  .price-chip{flex:none;font-size:11.5px;font-weight:700;color:#5b4a78;background:#f3eefb;
+    border:1px solid #e7ddf8;border-radius:999px;padding:5px 10px;white-space:nowrap}
+  .price-chip b{color:var(--brand)}
+  .price-chip.rare{color:#8a3a5c;background:#fdeef4;border-color:#f8dbe7}
+  .price-chip.rare b{color:#c2407a}
+  .notice{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:linear-gradient(180deg,#fff,#f7f4fd);
+    border:1px solid #ece4fa;font-size:11.5px;color:var(--ink-2);line-height:1.6}
+  .notice b{color:var(--brand);font-weight:800}
+  .notice .lbl{font-weight:800;color:var(--ink);margin-right:4px}
+  .search{margin:10px 0 0;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;padding:9px 12px;box-shadow:0 1px 2px rgba(20,10,40,.03)}
+  .search svg{flex:none}
+  .search input{border:0;outline:0;flex:1;font:inherit;font-size:13.5px;background:transparent;color:var(--ink);min-width:0}
+  .search input::placeholder{color:#b3adbd}
+  .search .clr{border:0;background:#f1eef5;color:#6b6478;border-radius:50%;width:20px;height:20px;
+    display:none;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex:none}
+  .search.has .clr{display:flex}
+
+  .fgroups{padding:8px 0 10px;display:flex;flex-direction:column;gap:6px}
+  .frow{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .frow::-webkit-scrollbar{display:none}
+  .frow .flabel{flex:none;font-size:10.5px;font-weight:800;color:#a9a2b6;width:44px;letter-spacing:-.2px}
+  .chip{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:999px;
+    padding:6px 11px;font-size:12px;font-weight:700;white-space:nowrap;transition:.15s}
+  .chip:hover{border-color:#dcd4ea}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 3px 10px rgba(21,18,26,.16)}
+  .chip .n{font-size:10.5px;font-weight:800;color:#b3adbd;margin-left:3px}
+  .chip.on .n{color:rgba(255,255,255,.62)}
+  .chip.series.on{background:var(--brand);border-color:var(--brand)}
+
+  .meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 10px}
+  .meta .cnt{font-size:12.5px;color:var(--ink-3)}
+  .meta .cnt b{color:var(--ink);font-weight:800;font-size:14px}
+  .toggle{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 10px;font-size:11.5px;
+    font-weight:700;color:var(--ink-2)}
+  .toggle.on{background:#f1eef5;border-color:#ded6ea}
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  @media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}}
+  @media(min-width:880px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    position:relative;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(20,10,40,.04);
+    transition:transform .16s,box-shadow .16s,border-color .16s;cursor:pointer}
+  .card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(30,15,60,.1);border-color:var(--line-2)}
+  .thumb{position:relative;aspect-ratio:3/4;background:#f4f2f7;overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb.land img{object-fit:contain;padding:6px 0}
+  .num{position:absolute;left:8px;top:8px;z-index:3;font-size:10px;font-weight:800;color:#2a2333;
+    background:rgba(255,255,255,.92);border-radius:7px;padding:2.5px 6px;letter-spacing:-.1px;
+    box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .badge{position:absolute;right:8px;top:8px;z-index:3;font-size:10px;font-weight:800;border-radius:999px;
+    padding:3px 7px;letter-spacing:-.2px}
+  .badge.pc{background:var(--ok-bg);color:var(--ok-fg)}
+  .badge.pk{background:#efe7fd;color:#5b3fb0}
+  .badge.id{background:#e7f0fd;color:#1f5aa8}
+  .badge.cut{background:#fdeef4;color:#ad3572}
+  .badge.rare{background:#fff0d9;color:#8a5a00;right:auto;left:8px;top:auto;bottom:34px}
+  .tagrow{position:absolute;left:8px;bottom:8px;right:8px;z-index:3;display:flex;gap:4px;flex-wrap:wrap}
+  .tag{font-size:9.5px;font-weight:800;border-radius:6px;padding:2.5px 6px;background:rgba(21,18,26,.72);
+    color:#fff;backdrop-filter:blur(3px);letter-spacing:-.2px}
+  .tag.md{background:rgba(11,106,72,.82)}
+  .tag.rare{background:rgba(160,78,0,.86)}
+  .body{padding:9px 10px 11px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .name{font-size:12.5px;font-weight:800;line-height:1.35;letter-spacing:-.3px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:34px}
+  .memo{font-size:10.5px;color:var(--ink-3);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:4px}
+  .price{font-size:13.5px;font-weight:800;letter-spacing:-.4px}
+  .price small{font-size:10px;font-weight:700;color:var(--ink-3);margin-left:1px}
+  .add{border:1px solid var(--line-2);background:#fff;border-radius:9px;width:28px;height:28px;flex:none;
+    font-size:15px;font-weight:800;color:var(--brand);display:flex;align-items:center;justify-content:center;line-height:1}
+  .add:hover{background:#f6f2fd}
+  .card.is-sold .thumb img{filter:grayscale(1) brightness(1.05);opacity:.62}
+  .card.is-sold .name,.card.is-sold .price{color:#9b96a5}
+  .card.is-sold .price{text-decoration:line-through}
+  .card.is-sold .thumb::after{content:"SOLD OUT";position:absolute;inset:0;z-index:2;display:flex;
+    align-items:center;justify-content:center;font-size:11.5px;font-weight:900;letter-spacing:2px;color:#fff;
+    background:rgba(40,36,48,.34)}
+  .card.is-hold{border-color:#f2dfae}
+  .empty{grid-column:1/-1;padding:48px 0;text-align:center;color:#9b96a5;font-size:13px}
+
+  footer{margin-top:26px;padding:16px 2px 0;border-top:1px solid var(--line)}
+  footer p{margin:0 0 5px;font-size:11.5px;color:var(--ink-3);line-height:1.75}
+  footer b{color:var(--ink-2)}
+  footer .sig{font-size:10.5px;color:#b8b2c2;margin-top:8px}
+
+  /* 하단 견적바 */
+  .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;transform:translateY(110%);
+    transition:transform .22s ease;padding:0 10px calc(10px + env(safe-area-inset-bottom))}
+  .bar.show{transform:translateY(0)}
+  .bar-in{max-width:920px;margin:0 auto;background:linear-gradient(135deg,#1c1726,#2a2136);color:#fff;
+    border-radius:16px;padding:11px 12px 11px 16px;display:flex;align-items:center;gap:10px;
+    box-shadow:0 12px 30px rgba(20,10,40,.3)}
+  .bar-in .t{font-size:11.5px;color:rgba(255,255,255,.7);font-weight:700}
+  .bar-in .v{font-size:16px;font-weight:800;letter-spacing:-.4px}
+  .bar-in button{margin-left:auto;border:0;border-radius:11px;background:#fff;color:#1c1726;
+    font-size:12.5px;font-weight:800;padding:10px 14px;flex:none}
+
+  /* 모달 */
+  .ovl{position:fixed;inset:0;z-index:60;display:none;background:rgba(16,12,24,.55);backdrop-filter:blur(3px);
+    align-items:flex-end;justify-content:center}
+  .ovl.open{display:flex}
+  @media(min-width:640px){.ovl{align-items:center;padding:20px}}
+  .sheet{width:100%;max-width:520px;max-height:94vh;overflow:auto;background:#fff;border-radius:20px 20px 0 0;
+    box-shadow:0 24px 60px rgba(0,0,0,.32);animation:up .2s ease}
+  @media(min-width:640px){.sheet{border-radius:20px}}
+  @keyframes up{from{transform:translateY(24px);opacity:.5}to{transform:translateY(0);opacity:1}}
+  .bigwrap{position:relative;background:#f2eff6}
+  .big{display:block;width:100%;max-height:56vh;object-fit:contain;background:#f2eff6}
+  .close{position:absolute;right:10px;top:10px;width:32px;height:32px;border:0;border-radius:50%;
+    background:rgba(255,255,255,.94);color:#2a2333;font-size:15px;font-weight:800;display:flex;
+    align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.16);z-index:5}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;border-radius:50%;
+    background:rgba(255,255,255,.9);color:#2a2333;font-size:16px;font-weight:800;display:flex;
+    align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.14)}
+  .nav.prev{left:8px} .nav.next{right:8px}
+  .nav[disabled]{opacity:.25}
+  .pageno{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:10.5px;font-weight:800;
+    color:#fff;background:rgba(20,16,28,.6);border-radius:999px;padding:2px 8px}
+  .sheet .in{padding:15px 16px 20px}
+  .kicker{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:7px}
+  .kicker .no{font-size:10.5px;font-weight:800;color:#5b4a78;background:#f3eefb;border-radius:6px;padding:2.5px 7px}
+  .kicker .st{font-size:10.5px;font-weight:800;border-radius:999px;padding:2.5px 7px;background:var(--ok-bg);color:var(--ok-fg)}
+  .kicker .st.hold{background:var(--hold-bg);color:var(--hold-fg)}
+  .kicker .st.sold{background:#eef0f3;color:#6b7280}
+  .kicker .sg{font-size:10.5px;font-weight:800;border-radius:999px;padding:2.5px 7px;background:#f1eef5;color:#6b6478}
+  .kicker .sg.md{background:#e6f4ec;color:#0b6a48}
+  .kicker .sg.rare{background:#fff3e0;color:#8a5a00}
+  .sheet h2{font-size:17.5px;margin:0 0 6px;letter-spacing:-.5px;line-height:1.32}
+  .priceline{display:flex;align-items:baseline;gap:7px;margin:0 0 11px;flex-wrap:wrap}
+  .priceline b{font-size:20px;font-weight:900;letter-spacing:-.7px}
+  .priceline span{font-size:11px;color:var(--ink-3);font-weight:600}
+  .desc{font-size:12.5px;color:var(--ink-2);line-height:1.72;background:#faf9fc;border:1px solid var(--line);
+    border-radius:11px;padding:10px 12px;margin:0 0 12px}
+  .spec{display:grid;grid-template-columns:70px 1fr;gap:6px 10px;font-size:12px;margin:0 0 14px}
+  .spec dt{color:var(--ink-3);font-weight:700}
+  .spec dd{margin:0;font-weight:700;color:var(--ink)}
+  .opts{display:flex;gap:7px;margin:0 0 12px;flex-wrap:wrap}
+  .opt{border:1px solid var(--line-2);background:#fff;border-radius:11px;padding:9px 12px;font-size:12px;
+    font-weight:800;color:var(--ink-2);display:flex;flex-direction:column;gap:1px;min-width:112px}
+  .opt small{font-size:10px;font-weight:700;color:var(--ink-3)}
+  .opt.on{border-color:var(--brand);background:#f7f3fe;color:var(--brand);box-shadow:0 0 0 1px var(--brand) inset}
+  .opt.on small{color:#8a6bbd}
+  .opt[disabled]{opacity:.45}
+  .cta{display:flex;gap:7px}
+  .cta button{flex:1;border:0;border-radius:12px;padding:13px 0;font-size:13px;font-weight:800;letter-spacing:-.2px}
+  .cta .primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;
+    box-shadow:0 8px 18px rgba(123,75,214,.28)}
+  .cta .ghost{flex:0 0 92px;background:#f4f2f7;color:var(--ink-2)}
+  .cta .primary[disabled]{background:#e9e6ee;color:#a8a2b3;box-shadow:none}
+
+  /* 견적 시트 */
+  .qlist{display:flex;flex-direction:column;gap:8px;margin:0 0 12px}
+  .qrow{display:flex;gap:9px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px}
+  .qrow img{width:44px;height:56px;object-fit:cover;border-radius:7px;flex:none;background:#f4f2f7}
+  .qrow .qi{min-width:0;flex:1}
+  .qrow .qn{font-size:12px;font-weight:800;letter-spacing:-.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .qrow .qs{font-size:10.5px;color:var(--ink-3);font-weight:600}
+  .qty{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;flex:none}
+  .qty button{border:0;background:#fff;width:26px;height:26px;font-size:13px;font-weight:800;color:var(--ink-2)}
+  .qty span{font-size:11.5px;font-weight:800;min-width:20px;text-align:center}
+  .qrow .qp{font-size:12px;font-weight:800;flex:none;min-width:56px;text-align:right}
+  .total{display:flex;justify-content:space-between;align-items:center;padding:12px 2px;border-top:1px solid var(--line);
+    font-size:12.5px;font-weight:700;color:var(--ink-2)}
+  .total b{font-size:19px;font-weight:900;color:var(--ink);letter-spacing:-.5px}
+  .qempty{text-align:center;color:#9b96a5;font-size:12.5px;padding:30px 0}
+  .copied{font-size:11.5px;color:var(--ok-fg);font-weight:800;text-align:center;padding-top:8px;opacity:0;transition:.2s}
+  .copied.on{opacity:1}
+  .tmpl{width:100%;border:1px solid var(--line);border-radius:11px;background:#faf9fc;color:var(--ink-2);
+    font-size:11.5px;line-height:1.65;padding:10px;margin:0 0 10px;min-height:92px;resize:vertical;
+    font-family:inherit;white-space:pre-wrap}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brandrow">
+      <div class="logo">QW</div>
+      <div style="min-width:0">
+        <h1>QWER 굿즈 카탈로그</h1>
+        <p class="sub" id="subline">응원 피켓 · 포토카드 · ID카드 · 네컷사진 · 총 59개</p>
+      </div>
+    </div>
+    <div class="prices">
+      <span class="price-chip">피켓 <b>15,000~18,000원</b></span>
+      <span class="price-chip">포카 <b>장당 1,500원</b> · 4장 세트 <b>5,000원</b></span>
+      <span class="price-chip rare">팝업 특전 포카 <b>장당 2,500원</b> (세트 할인 없음)</span>
+    </div>
+    <div class="notice">
+      <span class="lbl">포카 배치</span> 같은 버전 4장이 1페이지에 담겨 있어요 —
+      <b>좌상 쵸단 · 우상 마젠타 · 좌하 히나 · 우하 시연</b>. 빈칸은 파란 종이로 가려 촬영했습니다.
+    </div>
+  </div>
+</header>
+<div class="stickybar">
+  <div class="top-in">
+    <div class="search" id="searchbox">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b3adbd" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="번호·키워드 검색 (예: 12, 마운틴듀, 교복, 히나)">
+      <button class="clr" id="qclr" aria-label="검색 지우기">✕</button>
+    </div>
+    <div class="fgroups">
+      <div class="frow" id="fcat"><span class="flabel">종류</span></div>
+      <div class="frow" id="fmem"><span class="flabel">멤버</span></div>
+      <div class="frow" id="fser"><span class="flabel">시리즈</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="meta">
+    <div class="cnt" id="count"></div>
+    <button class="toggle" id="soldT">판매완료 숨기기</button>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <p>· 거래는 <b>정릉동(정릉로38길)</b> 근처 직거래, 시간은 채팅으로 맞춰요.<br>
+       · 반값택배(편의점 택배)도 가능하고 <b>선불 2,000원</b>이에요.<br>
+       · 포토카드는 장당 1,500원, 같은 버전 4장을 한 번에 가져가시면 5,000원이에요.<br>
+       · 사진과 실물 색감은 조명 때문에 조금 다를 수 있어요. 궁금한 건 편하게 물어봐 주세요.</p>
+    <p class="sig" id="sig">QWER 굿즈 정리 판매 · 마지막 수정 2026.11.26</p>
+  </footer>
+</div>
+
+<div class="bar" id="bar">
+  <div class="bar-in">
+    <div>
+      <div class="t" id="barT">담은 항목 0개</div>
+      <div class="v" id="barV">0원</div>
+    </div>
+    <button id="barBtn">견적 보기</button>
+  </div>
+</div>
+
+<div class="ovl" id="ovl"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+
+<script>
+const GOODS = [{"no":"피켓 #1","cat":"응원 피켓","catkey":"pk","img":"images/pk1.jpg","name":"4멤버 응원 이미지 피켓 (미니 피켓 키링 포함)","memo":"쵸단 · 마젠타 · 히나 · 시연","mem":["쵸단","마젠타","히나","시연"],"series":"응원 피켓","cards":4,"unit":18000,"set":null,"tags":["4종"],"src":"5639","desc":"쵸단 · 마젠타 · 히나 · 시연 4명 라운드 피켓입니다. 손잡이 끝에 같은 사진의 미니 피켓 키링이 달려 있어요. 가격은 개당입니다.","sold":false,"hold":false},{"no":"피켓 #2","cat":"응원 피켓","catkey":"pk","img":"images/pk2.jpg","name":"우비 버전 응원 이미지 피켓 (히나·마젠타 2종)","memo":"우비 · 레인코트 버전","mem":["히나","마젠타"],"series":"응원 피켓","cards":2,"unit":15000,"set":null,"tags":["2종"],"src":"5640","desc":"우비(레인코트) 버전 라운드 피켓 히나 · 마젠타 2종입니다. 가격은 개당입니다.","sold":false,"hold":false},{"no":"포카 #1","cat":"포토카드","catkey":"pc","img":"images/pc01.jpg","name":"포토카드 2장","memo":"블랙 재킷 · 화이트","mem":["쵸단","시연"],"series":"기타","cards":2,"unit":1500,"set":null,"tags":[],"desc":"빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5590,"sold":false,"hold":false},{"no":"포카 #2","cat":"포토카드","catkey":"pc","img":"images/pc02.jpg","name":"포토카드 4장 세트","memo":"교복 · 네이비","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5588,"sold":false,"hold":false},{"no":"포카 #3","cat":"포토카드","catkey":"pc","img":"images/pc03.jpg","name":"포토카드 4장 세트","memo":"토끼 후드 · 네이비","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5589,"sold":false,"hold":false},{"no":"포카 #4","cat":"포토카드","catkey":"pc","img":"images/pc04.jpg","name":"포토카드 4장 세트","memo":"베레모 · 세일러","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5591,"sold":false,"hold":false},{"no":"포카 #5","cat":"포토카드","catkey":"pc","img":"images/pc05.jpg","name":"포토카드 4장 세트","memo":"교복 · 넥타이","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5592,"sold":false,"hold":false},{"no":"포카 #6","cat":"포토카드","catkey":"pc","img":"images/pc06.jpg","name":"포토카드 4장 세트","memo":"교복 · 회색 재킷","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5594,"sold":false,"hold":false},{"no":"포카 #7","cat":"포토카드","catkey":"pc","img":"images/pc07.jpg","name":"포토카드 4장 세트","memo":"교복 · 조끼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5593,"sold":false,"hold":false},{"no":"포카 #8","cat":"포토카드","catkey":"pc","img":"images/pc08.jpg","name":"포토카드 4장 세트","memo":"화이트 · 퍼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5595,"sold":false,"hold":false},{"no":"포카 #9","cat":"포토카드","catkey":"pc","img":"images/pc09.jpg","name":"포토카드 4장 세트","memo":"블랙 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5587,"sold":false,"hold":false},{"no":"포카 #10","cat":"포토카드","catkey":"pc","img":"images/pc10.jpg","name":"포토카드 4장 세트","memo":"교복 · 퍼 후드","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5596,"sold":false,"hold":false},{"no":"포카 #11","cat":"포토카드","catkey":"pc","img":"images/pc11.jpg","name":"포토카드 4장 세트","memo":"블랙 의상","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5605,"sold":false,"hold":false},{"no":"포카 #12","cat":"포토카드","catkey":"pc","img":"images/pc12.jpg","name":"포토카드 4장 세트","memo":"마젠타 · 화이트","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5601,"sold":false,"hold":false},{"no":"포카 #13","cat":"포토카드","catkey":"pc","img":"images/pc13.jpg","name":"포토카드 4장 세트","memo":"마젠타 · 화이트 티","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5602,"sold":false,"hold":false},{"no":"포카 #14","cat":"포토카드","catkey":"pc","img":"images/pc14.jpg","name":"포토카드 4장 세트","memo":"블랙 정장 · 넥타이","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5606,"sold":false,"hold":false},{"no":"포카 #15","cat":"포토카드","catkey":"pc","img":"images/pc15.jpg","name":"포토카드 4장 세트","memo":"야구 유니폼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5607,"sold":false,"hold":false},{"no":"포카 #16","cat":"포토카드","catkey":"pc","img":"images/pc16.jpg","name":"포토카드 4장 세트","memo":"블랙 · 크림","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5610,"sold":false,"hold":false},{"no":"포카 #17","cat":"포토카드","catkey":"pc","img":"images/pc17.jpg","name":"포토카드 4장 세트","memo":"크림 · 카메라","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5609,"sold":false,"hold":false},{"no":"포카 #18","cat":"포토카드","catkey":"pc","img":"images/pc18.jpg","name":"포토카드 4장 세트","memo":"블랙 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5608,"sold":false,"hold":false},{"no":"포카 #19","cat":"포토카드","catkey":"pc","img":"images/pc19.jpg","name":"포토카드 4장 세트","memo":"크림 · 플라워","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5611,"sold":false,"hold":false},{"no":"포카 #20","cat":"포토카드","catkey":"pc","img":"images/pc20.jpg","name":"포토카드 4장 세트","memo":"네이비 · 화이트 캡","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5612,"sold":false,"hold":false},{"no":"포카 #21","cat":"포토카드","catkey":"pc","img":"images/pc21.jpg","name":"포토카드 2장","memo":"다크 · 간식","mem":["쵸단","히나"],"series":"기타","cards":2,"unit":1500,"set":null,"tags":[],"desc":"빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5623,"sold":false,"hold":false},{"no":"포카 #22","cat":"포토카드","catkey":"pc","img":"images/pc22.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 블루","mem":["쵸단","마젠타","히나","시연"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"tags":["마운틴듀 콜라보"],"desc":"마운틴듀 콜라보 개인 4종입니다. 마운틴듀 캔과 함께 촬영한 블루 버전.","src":5613,"sold":false,"hold":false},{"no":"포카 #23","cat":"포토카드","catkey":"pc","img":"images/pc23.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 단체","mem":["단체·유닛"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"tags":["마운틴듀 콜라보"],"desc":"마운틴듀 콜라보 단체 4장입니다. 위 2장은 QWER 로고 단체 포카 2종, 아래 2장은 블랙 착장 \"마운틴듀 공식 모델 QWER\" 단체 포카(동일 2장)입니다.","src":5614,"sold":false,"hold":false},{"no":"포카 #24","cat":"포토카드","catkey":"pc","img":"images/pc24.jpg","name":"포토카드 4장 세트","memo":"블루 · 핑크","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5616,"sold":false,"hold":false},{"no":"포카 #25","cat":"포토카드","catkey":"pc","img":"images/pc25.jpg","name":"포토카드 4장 세트","memo":"블랙 · 체크","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5618,"sold":false,"hold":false},{"no":"포카 #26","cat":"포토카드","catkey":"pc","img":"images/pc26.jpg","name":"포토카드 4장 세트","memo":"올리브 · 그린","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5615,"sold":false,"hold":false},{"no":"포카 #27","cat":"포토카드","catkey":"pc","img":"images/pc27.jpg","name":"포토카드 4장 세트","memo":"브라운 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5617,"sold":false,"hold":false},{"no":"포카 #28","cat":"포토카드","catkey":"pc","img":"images/pc28.jpg","name":"포토카드 4장 세트","memo":"아웃도어 · 재킷","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5619,"sold":false,"hold":false},{"no":"포카 #29","cat":"포토카드","catkey":"pc","img":"images/pc29.jpg","name":"포토카드 4장 세트","memo":"화이트 티 · 레드","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5622,"sold":false,"hold":false},{"no":"포카 #30","cat":"포토카드","catkey":"pc","img":"images/pc30.jpg","name":"포토카드 4장 세트","memo":"핑크 · 블랙","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5621,"sold":false,"hold":false},{"no":"포카 #31","cat":"포토카드","catkey":"pc","img":"images/pc31.jpg","name":"포토카드 4장 세트","memo":"파스텔","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5620,"sold":false,"hold":false},{"no":"포카 #32","cat":"포토카드","catkey":"pc","img":"images/pc32.jpg","name":"포토카드 4장 세트","memo":"프린트 셔츠","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5625,"sold":false,"hold":false},{"no":"포카 #33","cat":"포토카드","catkey":"pc","img":"images/pc33.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 교복","mem":["쵸단","마젠타","히나","시연"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"tags":["마운틴듀 콜라보"],"desc":"마운틴듀 콜라보 교복(블랙 수트) 착장 개인 4종입니다. 카드마다 멤버 이름이 인쇄되어 있어요.","src":5624,"sold":false,"hold":false},{"no":"포카 #34","cat":"포토카드","catkey":"pc","img":"images/pc34.jpg","name":"포토카드 4장 세트","memo":"라이트 블루 셔츠","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5626,"sold":false,"hold":false},{"no":"포카 #35","cat":"포토카드","catkey":"pc","img":"images/pc35.jpg","name":"포토카드 4장 세트","memo":"플라워 · 오프숄더","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5628,"sold":false,"hold":false},{"no":"포카 #36","cat":"포토카드","catkey":"pc","img":"images/pc36.jpg","name":"포토카드 4장 세트","memo":"화이트 니트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5627,"sold":false,"hold":false},{"no":"포카 #37","cat":"포토카드","catkey":"pc","img":"images/pc37.jpg","name":"포토카드 4장 세트","memo":"데님 · 프린트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5629,"sold":false,"hold":false},{"no":"포카 #38","cat":"포토카드","catkey":"pc","img":"images/pc38.jpg","name":"포토카드 4장 세트","memo":"핑크 풍선 · 기타","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5630,"sold":false,"hold":false},{"no":"포카 #39","cat":"포토카드","catkey":"pc","img":"images/pc39.jpg","name":"포토카드 4장 세트","memo":"블랙 수트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5631,"sold":false,"hold":false},{"no":"포카 #40","cat":"포토카드","catkey":"pc","img":"images/pc40.jpg","name":"포토카드 2장","memo":"베이비 · 화이트","mem":["히나","시연"],"series":"기타","cards":2,"unit":1500,"set":null,"tags":[],"desc":"빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5632,"sold":false,"hold":false},{"no":"포카 #41","cat":"포토카드","catkey":"pc","img":"images/pc41.jpg","name":"포토카드 4장 세트","memo":"핑크 · 베이지","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5633,"sold":false,"hold":false},{"no":"포카 #42","cat":"포토카드","catkey":"pc","img":"images/pc42.jpg","name":"포토카드 4장 세트","memo":"팝업 특전","mem":["단체·유닛"],"series":"팝업 특전","cards":4,"unit":2500,"set":null,"tags":["특전·레어","세트 할인 없음"],"desc":"팝업스토어 구매 특전 포토카드 4종입니다. 구성: QR코드. / 기타즈☆ / 냥멍즈. / 단체(Happy Birthday). 구하기 어려운 특전이라 세트 할인 없이 장당 2,500원입니다.","src":5634,"sold":false,"hold":false},{"no":"포카 #43","cat":"포토카드","catkey":"pc","img":"images/pc43.jpg","name":"포토카드 4장 세트","memo":"핑크 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5637,"sold":false,"hold":false},{"no":"포카 #44","cat":"포토카드","catkey":"pc","img":"images/pc44.jpg","name":"포토카드 4장 세트","memo":"생일 · 옐로","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5635,"sold":false,"hold":false},{"no":"포카 #45","cat":"포토카드","catkey":"pc","img":"images/pc45.jpg","name":"포토카드 4장 세트","memo":"블랙","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5638,"sold":false,"hold":false},{"no":"포카 #46","cat":"포토카드","catkey":"pc","img":"images/pc46.jpg","name":"포토카드 4장 세트","memo":"옐로 · 그린","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"tags":[],"desc":"","src":5636,"sold":false,"hold":false},{"no":"ID·렌티큘러 #1","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id01.jpg","name":"MANITO 학생증 ID카드 · 화이트/핑크 4종","memo":"학생증 · 화이트/핑크","mem":["쵸단","마젠타","히나","시연"],"series":"MANITO","cards":4,"unit":1500,"set":5000,"land":false,"tags":["MANITO"],"desc":"","src":"5597","sold":false,"hold":false},{"no":"ID·렌티큘러 #2","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id02.jpg","name":"MANITO 학생증 ID카드 · 스카이블루 4종","memo":"학생증 · 스카이블루","mem":["쵸단","마젠타","히나","시연"],"series":"MANITO","cards":4,"unit":1500,"set":5000,"land":true,"tags":["MANITO"],"desc":"","src":"5598","sold":false,"hold":false},{"no":"ID·렌티큘러 #3","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id03.jpg","name":"렌티큘러 카드 · 레드헤어(화이트 비니) 4종","memo":"렌티큘러 · 레드헤어","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"land":false,"tags":["렌티큘러"],"desc":"","src":"5599","sold":false,"hold":false},{"no":"ID·렌티큘러 #4","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id04.jpg","name":"Algorithm's Blossom ID카드 · 레드 버전 4종","memo":"블라썸 · 레드","mem":["마젠타"],"series":"Algorithm's Blossom","cards":4,"unit":1500,"set":5000,"land":true,"tags":["Algorithm's Blossom"],"desc":"","src":"5600","sold":false,"hold":false},{"no":"ID·렌티큘러 #5","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id05.jpg","name":"렌티큘러 카드 · 블루 선글라스 수트 4종","memo":"렌티큘러 · 블루 수트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"land":false,"tags":["렌티큘러"],"desc":"","src":"5603","sold":false,"hold":false},{"no":"ID·렌티큘러 #6","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id06.jpg","name":"Algorithm's Blossom ID카드 · 수트 버전 4종","memo":"블라썸 · 수트","mem":[],"series":"Algorithm's Blossom","cards":4,"unit":1500,"set":5000,"land":true,"tags":["Algorithm's Blossom"],"desc":"수트 버전 4종입니다. 네 장 모두 같은 멤버로 보여 멤버 표기는 비워 두었습니다.","src":"5604","sold":false,"hold":false},{"no":"네컷 #1","cat":"네컷사진","catkey":"cut","img":"images/cut01.jpg","name":"MANITO 교복 네컷사진 · 마젠타","memo":"교복 4컷","mem":["마젠타"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5582","sold":false,"hold":false},{"no":"네컷 #2","cat":"네컷사진","catkey":"cut","img":"images/cut02.jpg","name":"MANITO 교복 네컷사진 · 시연","memo":"교복 4컷","mem":["시연"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5583","sold":false,"hold":false},{"no":"네컷 #3","cat":"네컷사진","catkey":"cut","img":"images/cut03.jpg","name":"MANITO 교복 네컷사진 · 히나","memo":"교복 4컷","mem":["히나"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5584","sold":false,"hold":false},{"no":"네컷 #4","cat":"네컷사진","catkey":"cut","img":"images/cut04.jpg","name":"MANITO 치어리더 세로 네컷 · 쵸단 · 마젠타 (2종)","memo":"치어리더 세로 4컷 2종","mem":["쵸단","마젠타"],"series":"MANITO","cards":2,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5585","sold":false,"hold":false},{"no":"네컷 #5","cat":"네컷사진","catkey":"cut","img":"images/cut05.jpg","name":"MANITO 치어리더 세로 네컷 · 히나 · 시연 (2종)","memo":"치어리더 세로 4컷 2종","mem":["히나","시연"],"series":"MANITO","cards":2,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5586","sold":false,"hold":false}];
+
+const PRICE_NOTE = {pk:'개당 가격', pc:'장당 1,500원 · 4장 세트 5,000원', id:'장당 1,500원 · 4장 세트 5,000원', cut:'장당 1,500원'};
+const won = n => n.toLocaleString('ko-KR');
+
+const CATS = [
+  {k:'전체', label:'전체'},
+  {k:'응원 피켓', label:'응원 피켓'},
+  {k:'포토카드', label:'포토카드'},
+  {k:'ID카드·렌티큘러', label:'ID카드·렌티큘러'},
+  {k:'네컷사진', label:'네컷사진'}
+];
+const MEMS = ['전체','쵸단','마젠타','히나','시연','단체·유닛'];
+const SERS = ['전체','MANITO',"Algorithm's Blossom",'마운틴듀 콜라보','팝업 특전','응원 피켓','기타'];
+
+let fcat='전체', fmem='전체', fser='전체', q='', hideSold=false;
+let curIdx=-1, cart=[];   // cart: {no, name, opt, unit, qty}
+
+const $ = s => document.querySelector(s);
+const gidx = no => GOODS.findIndex(g => g.no === no);
+
+/* ── 필터 칩 ─────────────────────────── */
+function cntCat(k){ return k==='전체' ? GOODS.length : GOODS.filter(g=>g.cat===k).length; }
+function cntMem(k){ return k==='전체' ? GOODS.length : GOODS.filter(g=>g.mem.includes(k)).length; }
+function cntSer(k){ return k==='전체' ? GOODS.length : GOODS.filter(g=>g.series===k).length; }
+
+function chipHtml(k, label, n, on, cls){
+  return `<button class="chip ${cls||''} ${on?'on':''}" data-k="${k}">${label}<span class="n">${n}</span></button>`;
+}
+function renderFilters(){
+  $('#fcat').innerHTML = '<span class="flabel">종류</span>' +
+    CATS.map(c=>chipHtml(c.k, c.label, cntCat(c.k), fcat===c.k)).join('');
+  $('#fmem').innerHTML = '<span class="flabel">멤버</span>' +
+    MEMS.map(k=>chipHtml(k, k, cntMem(k), fmem===k)).join('');
+  $('#fser').innerHTML = '<span class="flabel">시리즈</span>' +
+    SERS.map(k=>chipHtml(k, k, cntSer(k), fser===k, 'series')).join('');
+  $('#fcat').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{fcat=b.dataset.k;renderFilters();render();});
+  $('#fmem').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{fmem=b.dataset.k;renderFilters();render();});
+  $('#fser').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{fser=b.dataset.k;renderFilters();render();});
+}
+
+/* ── 목록 ─────────────────────────────── */
+function list(){
+  let a = GOODS.slice();
+  if(fcat!=='전체') a = a.filter(g=>g.cat===fcat);
+  if(fmem!=='전체') a = a.filter(g=>g.mem.includes(fmem));
+  if(fser!=='전체') a = a.filter(g=>g.series===fser);
+  if(hideSold) a = a.filter(g=>!g.sold);
+  if(q){
+    const t = q.toLowerCase().replace(/\s+/g,'');
+    a = a.filter(g=>{
+      const hay = (g.no+g.name+g.memo+g.desc+g.series+g.mem.join('')+
+        (g.tags||[]).join('')+String(g.src||'')).toLowerCase().replace(/\s+/g,'');
+      const num = g.no.match(/#(\d+)/);
+      const tnum = t.match(/^#?(\d+)$/);
+      if(tnum && num) return num[1] === tnum[1] || hay.includes(t);
+      return hay.includes(t);
+    });
+  }
+  return a;
+}
+
+function tagsFor(g){
+  const out = [];
+  (g.tags||[]).forEach(t=>out.push(`<span class="tag ${t.includes('특전')?'rare':''}">${t}</span>`));
+  if(g.series==='마운틴듀 콜라보') out.push('<span class="tag md">마운틴듀 콜라보</span>');
+  else if(g.series==='MANITO') out.push('<span class="tag">MANITO</span>');
+  else if(g.series==="Algorithm's Blossom") out.push('<span class="tag">Blossom</span>');
+  else if(g.series==='응원 피켓') out.push('<span class="tag">피켓</span>');
+  return out.slice(0,2).join('');
+}
+
+function priceLabel(g){
+  if(g.set) return `${won(g.set)}<small>원 / 4장</small>`;
+  return `${won(g.unit)}<small>원${g.catkey==='pk'?' / 개':''}</small>`;
+}
+
+function cardHtml(g){
+  const st = g.sold?'is-sold':(g.hold?'is-hold':'');
+  const badgeCls = {pk:'pk',pc:'pc',id:'id',cut:'cut'}[g.catkey];
+  return `<article class="card ${st}" data-no="${g.no}">
+    <div class="thumb${g.land?' land':''}">
+      <img src="${g.img}" alt="${g.no} ${g.name}" loading="lazy" decoding="async">
+      <span class="num">${g.no}</span>
+      <span class="badge ${badgeCls}">${g.cat}</span>
+      <div class="tagrow">${tagsFor(g)}</div>
+    </div>
+    <div class="body">
+      <div class="name">${g.name}</div>
+      <div class="memo">${g.memo||''}</div>
+      <div class="row">
+        <div class="price">${priceLabel(g)}</div>
+        ${g.sold?'':'<button class="add" data-add="'+g.no+'" aria-label="담기">+</button>'}
+      </div>
+    </div>
+  </article>`;
+}
+
+function render(){
+  const a = list();
+  $('#grid').innerHTML = a.length ? a.map(cardHtml).join('')
+    : `<div class="empty">조건에 맞는 상품이 없어요.<br>필터를 하나씩 풀어보세요.</div>`;
+  $('#count').innerHTML = `<b>${a.length}</b>개 상품` +
+    (a.length!==GOODS.length?` <span style="color:#b3adbd">/ 전체 ${GOODS.length}</span>`:'');
+  $('#grid').querySelectorAll('.card').forEach(el=>{
+    el.onclick = e => {
+      if(e.target.closest('[data-add]')) return;
+      openModal(a.findIndex(x=>x.no===el.dataset.no));
+    };
+  });
+  $('#grid').querySelectorAll('[data-add]').forEach(b=>{
+    b.onclick = e => { e.stopPropagation(); quickAdd(b.dataset.add); };
+  });
+}
+
+/* ── 상세 모달 ────────────────────────── */
+function stLabel(g){
+  if(g.sold) return ['sold','판매완료'];
+  if(g.hold) return ['hold','예약중'];
+  return ['','판매중'];
+}
+function optBtns(g){
+  const b = [];
+  if(g.catkey==='pk'){
+    b.push(`<button class="opt on" data-opt="개" data-unit="${g.unit}"><span>${won(g.unit)}원</span><small>개당</small></button>`);
+    if(g.cards>1) b.push(`<button class="opt" data-opt="${g.cards}종 세트" data-unit="${g.unit*g.cards}"><span>${won(g.unit*g.cards)}원</span><small>${g.cards}종 일괄</small></button>`);
+  } else {
+    if(g.set) b.push(`<button class="opt on" data-opt="4장 세트" data-unit="${g.set}"><span>${won(g.set)}원</span><small>4장 세트</small></button>`);
+    b.push(`<button class="opt ${g.set?'':'on'}" data-opt="낱장" data-unit="${g.unit}"><span>${won(g.unit)}원</span><small>장당</small></button>`);
+  }
+  return b.join('');
+}
+function openModal(i){
+  const a = list(); if(i<0||i>=a.length) return;
+  curIdx = i; const g = a[i]; const [sc, st] = stLabel(g);
+  const posNote = (g.catkey==='pc' && g.cards===4)
+    ? '좌상 쵸단 · 우상 마젠타 · 좌하 히나 · 우하 시연'
+    : (g.catkey==='pc' ? '빈칸은 파란 종이로 가려 촬영 (실제 2장)' : '');
+  const sheet = $('#sheet');
+  sheet.innerHTML = `
+    <div class="bigwrap">
+      <img class="big" src="${g.img}" alt="${g.no} ${g.name}">
+      <button class="close" id="x1" aria-label="닫기">✕</button>
+      <button class="nav prev" id="pv" ${i===0?'disabled':''} aria-label="이전">‹</button>
+      <button class="nav next" id="nx" ${i===a.length-1?'disabled':''} aria-label="다음">›</button>
+      <span class="pageno">${i+1} / ${a.length}</span>
+    </div>
+    <div class="in">
+      <div class="kicker">
+        <span class="no">${g.no}</span>
+        <span class="st ${sc}">${st}</span>
+        <span class="sg ${g.series==='마운틴듀 콜라보'?'md':g.series==='팝업 특전'?'rare':''}">${g.series}</span>
+        ${(g.tags||[]).map(t=>`<span class="sg rare">${t}</span>`).join('')}
+      </div>
+      <h2>${g.name}</h2>
+      <div class="priceline"><b>${g.set?won(g.set)+'원':won(g.unit)+'원'}</b><span>${g.set?'4장 세트 기준 · 낱장 '+won(g.unit)+'원':PRICE_NOTE[g.catkey]}</span></div>
+      ${g.desc?`<p class="desc">${g.desc}</p>`:''}
+      <dl class="spec">
+        <dt>구분</dt><dd>${g.cat} · ${g.series}</dd>
+        <dt>멤버</dt><dd>${g.mem.length?g.mem.join(' · '):'표기 없음'}</dd>
+        <dt>구성</dt><dd>${g.cards}장${g.catkey==='pk'?' (종)':''}${posNote?' · '+posNote:''}</dd>
+        <dt>거래</dt><dd>정릉동 직거래 / 반값택배 선불 2,000원</dd>
+      </dl>
+      ${g.sold?'':`<div class="opts" id="opts">${optBtns(g)}</div>
+      <div class="cta">
+        <button class="primary" id="addBtn">견적에 담기</button>
+        <button class="ghost" id="x2">닫기</button>
+      </div>`}
+      ${g.sold?`<div class="cta"><button class="ghost" id="x2" style="flex:1">닫기</button></div>`:''}
+    </div>`;
+  $('#ovl').classList.add('open');
+  sheet.querySelector('#x1').onclick = closeModal;
+  const x2 = sheet.querySelector('#x2'); if(x2) x2.onclick = closeModal;
+  sheet.querySelector('#pv').onclick = () => { if(curIdx>0){ openModal(curIdx-1); } };
+  sheet.querySelector('#nx').onclick = () => { const l=list(); if(curIdx<l.length-1){ openModal(curIdx+1); } };
+  const opts = sheet.querySelector('#opts');
+  if(opts){
+    opts.querySelectorAll('.opt').forEach(b=>{
+      b.onclick = () => {
+        opts.querySelectorAll('.opt').forEach(o=>o.classList.remove('on'));
+        b.classList.add('on');
+      };
+    });
+    sheet.querySelector('#addBtn').onclick = () => {
+      const on = opts.querySelector('.opt.on');
+      addToCart(g, on.dataset.opt, Number(on.dataset.unit));
+      closeModal(); flashBar();
+    };
+  }
+}
+function closeModal(){ $('#ovl').classList.remove('open'); }
+
+/* ── 견적(카트) ───────────────────────── */
+function defaultOpt(g){
+  if(g.catkey==='pk') return ['개', g.unit];
+  if(g.set) return ['4장 세트', g.set];
+  return ['낱장', g.unit];
+}
+function quickAdd(no){
+  const g = GOODS[gidx(no)]; if(!g || g.sold) return;
+  const [opt, unit] = defaultOpt(g);
+  addToCart(g, opt, unit); flashBar();
+}
+function addToCart(g, opt, unit){
+  const key = g.no + '|' + opt;
+  const hit = cart.find(c=>c.key===key);
+  if(hit) hit.qty += 1;
+  else cart.push({key, no:g.no, name:g.name, opt, unit, qty:1, img:g.img});
+  renderBar();
+}
+function renderBar(){
+  const n = cart.reduce((s,c)=>s+c.qty,0);
+  const sum = cart.reduce((s,c)=>s+c.unit*c.qty,0);
+  $('#barT').textContent = `담은 항목 ${n}개`;
+  $('#barV').textContent = won(sum) + '원';
+  $('#bar').classList.toggle('show', n>0);
+}
+function flashBar(){ $('#bar').classList.add('show'); }
+
+function openQuote(){
+  curIdx = -1;
+  const sum = cart.reduce((s,c)=>s+c.unit*c.qty,0);
+  const rows = cart.map(c=>`
+    <div class="qrow">
+      <img src="${c.img}" alt="">
+      <div class="qi">
+        <div class="qn">${c.no} ${c.opt}</div>
+        <div class="qs">${c.name}</div>
+      </div>
+      <div class="qty">
+        <button data-dec="${c.key}">−</button><span>${c.qty}</span><button data-inc="${c.key}">+</button>
+      </div>
+      <div class="qp">${won(c.unit*c.qty)}원</div>
+    </div>`).join('');
+  const text = buildText();
+  const sheet = $('#sheet');
+  sheet.innerHTML = `
+    <div style="text-align:right;padding:14px 14px 0">
+      <button class="close" id="qx" aria-label="닫기" style="position:static;display:inline-flex;box-shadow:none;background:#f4f2f7">✕</button>
+    </div>
+    <div class="in" style="padding-top:2px">
+      <h2>견적 도우미</h2>
+      <p class="desc" style="margin-bottom:12px">담은 항목과 예상 금액이에요. 아래 문구를 복사해서 당근 채팅에 붙여넣으면 그대로 문의가 됩니다.</p>
+      ${cart.length?`<div class="qlist">${rows}</div>
+      <div class="total"><span>합계</span><b>${won(sum)}원</b></div>
+      <textarea class="tmpl" id="tmpl" readonly>${text}</textarea>
+      <div class="cta">
+        <button class="primary" id="copyBtn">문의 문구 복사</button>
+        <button class="ghost" id="clearBtn">비우기</button>
+      </div>
+      <div class="copied" id="copied">복사됐어요! 당근 채팅에 붙여넣기 하세요.</div>`
+      :`<div class="qempty">아직 담은 항목이 없어요.<br>상품 카드에서 <b>+</b> 를 눌러 담아보세요.</div>
+      <div class="cta"><button class="ghost" id="clearBtn" style="flex:1">닫기</button></div>`}
+    </div>`;
+  $('#ovl').classList.add('open');
+  sheet.querySelector('#qx').onclick = closeModal;
+  sheet.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>{chg(b.dataset.inc,1);openQuote();});
+  sheet.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{chg(b.dataset.dec,-1);openQuote();});
+  const cb = sheet.querySelector('#clearBtn');
+  if(cb) cb.onclick = () => { cart=[]; renderBar(); closeModal(); };
+  const copy = sheet.querySelector('#copyBtn');
+  if(copy) copy.onclick = async () => {
+    const t = buildText();
+    try{
+      await navigator.clipboard.writeText(t);
+    }catch(e){
+      const ta = sheet.querySelector('#tmpl'); ta.removeAttribute('readonly'); ta.select();
+      document.execCommand('copy'); ta.setAttribute('readonly','');
+    }
+    sheet.querySelector('#copied').classList.add('on');
+  };
+}
+function chg(key,d){
+  const i = cart.findIndex(c=>c.key===key); if(i<0) return;
+  cart[i].qty += d;
+  if(cart[i].qty<1) cart.splice(i,1);
+  renderBar();
+}
+function buildText(){
+  const sum = cart.reduce((s,c)=>s+c.unit*c.qty,0);
+  const lines = cart.map(c=>`· ${c.no} ${c.opt}${c.qty>1?' ×'+c.qty:''} — ${won(c.unit*c.qty)}원`);
+  return `안녕하세요! QWER 굿즈 카탈로그 보고 문의드립니다.\n\n${lines.join('\n')}\n\n합계 ${won(sum)}원\n거래 방식: 정릉동 직거래 / 반값택배(선불 2,000원)`;
+}
+
+/* ── 이벤트 ───────────────────────────── */
+$('#ovl').onclick = e => { if(e.target.id==='ovl') closeModal(); };
+document.addEventListener('keydown', e=>{
+  if(!$('#ovl').classList.contains('open')) return;
+  if(e.key==='Escape') closeModal();
+  if(curIdx>=0){
+    const l = list();
+    if(e.key==='ArrowLeft' && curIdx>0) openModal(curIdx-1);
+    if(e.key==='ArrowRight' && curIdx<l.length-1) openModal(curIdx+1);
+  }
+});
+$('#q').oninput = e => {
+  q = e.target.value;
+  $('#searchbox').classList.toggle('has', !!q);
+  render();
+};
+$('#qclr').onclick = () => { $('#q').value=''; q=''; $('#searchbox').classList.remove('has'); render(); };
+$('#soldT').onclick = () => {
+  hideSold = !hideSold;
+  $('#soldT').classList.toggle('on', hideSold);
+  $('#soldT').textContent = hideSold ? '판매완료 보기' : '판매완료 숨기기';
+  render();
+};
+$('#barBtn').onclick = openQuote;
+
+$('#subline').textContent = `응원 피켓 · 포토카드 · ID카드 · 네컷사진 · 총 ${GOODS.length}개`;
+renderFilters(); render(); renderBar();
+</script>
+</body>
+</html>
