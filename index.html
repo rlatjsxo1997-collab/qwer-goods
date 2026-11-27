@@ -77,6 +77,7 @@
   .stsum{font-size:11.5px;color:var(--ink-3);font-weight:600;white-space:nowrap}
   .stsum b{color:var(--ink-2);font-weight:800}
   .stsum b.on{color:var(--brand)}
+  .stsum .stph{color:#a06a00;font-weight:800}
   .meta .cnt{font-size:12.5px;color:var(--ink-3)}
   .meta .cnt b{color:var(--ink);font-weight:800;font-size:14px}
   .toggle{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 10px;font-size:11.5px;
@@ -137,6 +138,19 @@
   .soldnote{background:#f2f3f5;border:1px solid #e2e4e8;color:#596070}
   .holdtag{font-size:10px;font-weight:800;color:#946200;background:#fff3d6;border:1px solid #f2dfae;
     border-radius:8px;padding:4px 7px;flex:none;letter-spacing:-.2px}
+  /* 부분 예약(특정 멤버만 예약중) */
+  .card.is-phold{border-color:#f3ddb0}
+  .card.is-phold .thumb img{filter:grayscale(.28) brightness(1.01)}
+  .pholdbadge{position:absolute;right:8px;top:38px;z-index:3;font-size:9.5px;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,#f2a33a,#e07f00);border-radius:999px;padding:3px 8px;letter-spacing:-.3px;
+    box-shadow:0 2px 7px rgba(140,80,0,.32);white-space:nowrap}
+  .selbtn{border:1px solid #f0d7a6;background:#fffaf0;border-radius:9px;height:28px;padding:0 9px;flex:none;
+    font-size:11px;font-weight:800;color:#a06a00;display:flex;align-items:center;justify-content:center;letter-spacing:-.2px}
+  .selbtn:hover{background:#fdf2dc}
+  .opt.off[disabled]{opacity:.55;background:#f7f7f8;border-color:#e6e6ea;color:#9a95a4;cursor:not-allowed}
+  .opt.off[disabled] small{color:#a9a4b3}
+  .opt.mem{flex:1 1 40%;min-width:0}
+  .opt.setoff{flex:1 1 100%}
   .empty{grid-column:1/-1;padding:48px 0;text-align:center;color:#9b96a5;font-size:13px}
 
   footer{margin-top:26px;padding:16px 2px 0;border-top:1px solid var(--line)}
@@ -283,7 +297,7 @@
        · 반값택배(편의점 택배)도 가능하고 <b>선불 2,000원</b>이에요.<br>
        · 포토카드는 장당 1,500원, 같은 버전 4장을 한 번에 가져가시면 5,000원이에요.<br>
        · 팝업 특전 포카는 세트 할인 없이 장당 가격이고, <b>불꽃놀이 버전 2장</b>은 아주 귀한 카드라 <b>장당 15,000원</b>이에요.<br>
-       · <b>판매완료·예약중</b> 표시는 거래가 끝났거나 진행 중인 상품이라 장바구니·견적에 담기지 않아요.<br>
+      · <b>판매완료</b>는 거래가 끝난 상품이라 담기지 않아요. <b>마젠타 예약중</b>은 그 카드의 마젠타만 예약된 상태라, 같은 카드의 쵸단·히나·시연은 낱장(장당 1,500원)으로 담을 수 있어요(4장 세트는 제외).<br>
        · 사진과 실물 색감은 조명 때문에 조금 다를 수 있어요. 궁금한 건 편하게 물어봐 주세요.</p>
     <p class="sig" id="sig">QWER 굿즈 정리 판매 · 마지막 수정 2026.11.27</p>
   </footer>
@@ -302,7 +316,7 @@
 <div class="ovl" id="ovl"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 
 <script>
-const GOODS = [{"no":"피켓 #1","cat":"응원 피켓","catkey":"pk","img":"images/pk1.jpg","name":"4멤버 응원 이미지 피켓 (미니 피켓 키링 포함)","memo":"쵸단 · 마젠타 · 히나 · 시연","mem":["쵸단","마젠타","히나","시연"],"series":"응원 피켓","cards":4,"unit":18000,"set":null,"tags":["4종"],"src":"5639","desc":"쵸단 · 마젠타 · 히나 · 시연 4명 라운드 피켓입니다. 손잡이 끝에 같은 사진의 미니 피켓 키링이 달려 있어요. 가격은 개당입니다.","sold":false,"hold":false},{"no":"피켓 #2","cat":"응원 피켓","catkey":"pk","img":"images/pk2.jpg","name":"우비 버전 응원 이미지 피켓 (히나·마젠타 2종)","memo":"우비 · 레인코트 버전","mem":["히나","마젠타"],"series":"응원 피켓","cards":2,"unit":15000,"set":null,"tags":["2종"],"src":"5640","desc":"우비(레인코트) 버전 라운드 피켓 히나 · 마젠타 2종입니다. 가격은 개당입니다.","sold":false,"hold":false},{"no":"포카 #1","cat":"포토카드","catkey":"pc","img":"images/pc01.jpg","name":"불꽃놀이 버전 포토카드 2장","memo":"불꽃놀이 · 쵸단·시연","mem":["쵸단","시연"],"series":"팝업 특전","cards":2,"unit":15000,"set":null,"pnote":"장당 15,000원 · 세트 할인 없음 (팝업 특전)","tags":["특전·레어","세트 할인 없음"],"desc":"불꽃놀이(스파클러) 버전 포토카드 쵸단·시연 2장입니다. 팝업스토어 특전으로 풀린 카드라 세트 할인 없이 장당 15,000원입니다. 빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5590,"sold":false,"hold":false},{"no":"포카 #2","cat":"포토카드","catkey":"pc","img":"images/pc02.jpg","name":"포토카드 4장 세트","memo":"교복 · 네이비","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5588,"sold":true,"hold":false},{"no":"포카 #3","cat":"포토카드","catkey":"pc","img":"images/pc03.jpg","name":"포토카드 4장 세트","memo":"토끼 후드 · 네이비","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5589,"sold":false,"hold":false},{"no":"포카 #4","cat":"포토카드","catkey":"pc","img":"images/pc04.jpg","name":"포토카드 4장 세트","memo":"베레모 · 세일러","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5591,"sold":true,"hold":false},{"no":"포카 #5","cat":"포토카드","catkey":"pc","img":"images/pc05.jpg","name":"포토카드 4장 세트","memo":"교복 · 넥타이","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5592,"sold":false,"hold":false},{"no":"포카 #6","cat":"포토카드","catkey":"pc","img":"images/pc06.jpg","name":"포토카드 4장 세트","memo":"교복 · 회색 재킷","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5594,"sold":true,"hold":false},{"no":"포카 #7","cat":"포토카드","catkey":"pc","img":"images/pc07.jpg","name":"포토카드 4장 세트","memo":"교복 · 조끼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5593,"sold":true,"hold":false},{"no":"포카 #8","cat":"포토카드","catkey":"pc","img":"images/pc08.jpg","name":"포토카드 4장 세트","memo":"화이트 · 퍼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5595,"sold":false,"hold":false},{"no":"포카 #9","cat":"포토카드","catkey":"pc","img":"images/pc09.jpg","name":"포토카드 4장 세트","memo":"블랙 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5587,"sold":false,"hold":false},{"no":"포카 #10","cat":"포토카드","catkey":"pc","img":"images/pc10.jpg","name":"포토카드 4장 세트","memo":"교복 · 퍼 후드","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5596,"sold":false,"hold":false},{"no":"포카 #11","cat":"포토카드","catkey":"pc","img":"images/pc11.jpg","name":"포토카드 4장 세트","memo":"블랙 의상","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5605,"sold":false,"hold":false},{"no":"포카 #12","cat":"포토카드","catkey":"pc","img":"images/pc12.jpg","name":"포토카드 4장 세트","memo":"마젠타 · 화이트","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5601,"sold":false,"hold":false},{"no":"포카 #13","cat":"포토카드","catkey":"pc","img":"images/pc13.jpg","name":"포토카드 4장 세트","memo":"마젠타 · 화이트 티","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5602,"sold":false,"hold":false},{"no":"포카 #14","cat":"포토카드","catkey":"pc","img":"images/pc14.jpg","name":"포토카드 4장 세트","memo":"블랙 정장 · 넥타이","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5606,"sold":false,"hold":false},{"no":"포카 #15","cat":"포토카드","catkey":"pc","img":"images/pc15.jpg","name":"포토카드 4장 세트","memo":"야구 유니폼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5607,"sold":false,"hold":false},{"no":"포카 #16","cat":"포토카드","catkey":"pc","img":"images/pc16.jpg","name":"포토카드 4장 세트","memo":"블랙 · 크림","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5610,"sold":false,"hold":false},{"no":"포카 #17","cat":"포토카드","catkey":"pc","img":"images/pc17.jpg","name":"포토카드 4장 세트","memo":"크림 · 카메라","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5609,"sold":false,"hold":false},{"no":"포카 #18","cat":"포토카드","catkey":"pc","img":"images/pc18.jpg","name":"포토카드 4장 세트","memo":"블랙 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5608,"sold":false,"hold":false},{"no":"포카 #19","cat":"포토카드","catkey":"pc","img":"images/pc19.jpg","name":"포토카드 4장 세트","memo":"크림 · 플라워","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5611,"sold":true,"hold":false},{"no":"포카 #20","cat":"포토카드","catkey":"pc","img":"images/pc20.jpg","name":"포토카드 4장 세트","memo":"네이비 · 화이트 캡","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5612,"sold":true,"hold":false},{"no":"포카 #21","cat":"포토카드","catkey":"pc","img":"images/pc21.jpg","name":"포토카드 2장","memo":"다크 · 간식","mem":["쵸단","히나"],"series":"기타","cards":2,"unit":1500,"set":null,"pnote":null,"tags":[],"desc":"빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5623,"sold":false,"hold":false},{"no":"포카 #22","cat":"포토카드","catkey":"pc","img":"images/pc22.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 블루","mem":["쵸단","마젠타","히나","시연"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"마운틴듀 콜라보 개인 4종입니다. 마운틴듀 캔과 함께 촬영한 블루 버전.","src":5613,"sold":false,"hold":false},{"no":"포카 #23","cat":"포토카드","catkey":"pc","img":"images/pc23.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 단체","mem":["단체·유닛"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"마운틴듀 콜라보 단체 4장입니다. 위 2장은 QWER 로고 단체 포카 2종, 아래 2장은 블랙 착장 \"마운틴듀 공식 모델 QWER\" 단체 포카(동일 2장)입니다.","src":5614,"sold":false,"hold":false},{"no":"포카 #24","cat":"포토카드","catkey":"pc","img":"images/pc24.jpg","name":"포토카드 4장 세트","memo":"블루 · 핑크","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5616,"sold":true,"hold":false},{"no":"포카 #25","cat":"포토카드","catkey":"pc","img":"images/pc25.jpg","name":"포토카드 4장 세트","memo":"블랙 · 체크","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5618,"sold":false,"hold":false},{"no":"포카 #26","cat":"포토카드","catkey":"pc","img":"images/pc26.jpg","name":"포토카드 4장 세트","memo":"올리브 · 그린","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5615,"sold":false,"hold":false},{"no":"포카 #27","cat":"포토카드","catkey":"pc","img":"images/pc27.jpg","name":"포토카드 4장 세트","memo":"브라운 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5617,"sold":false,"hold":false},{"no":"포카 #28","cat":"포토카드","catkey":"pc","img":"images/pc28.jpg","name":"포토카드 4장 세트","memo":"아웃도어 · 재킷","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5619,"sold":false,"hold":false},{"no":"포카 #29","cat":"포토카드","catkey":"pc","img":"images/pc29.jpg","name":"포토카드 4장 세트","memo":"화이트 티 · 레드","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5622,"sold":false,"hold":false},{"no":"포카 #30","cat":"포토카드","catkey":"pc","img":"images/pc30.jpg","name":"포토카드 4장 세트","memo":"핑크 · 블랙","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5621,"sold":false,"hold":false},{"no":"포카 #31","cat":"포토카드","catkey":"pc","img":"images/pc31.jpg","name":"포토카드 4장 세트","memo":"파스텔","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5620,"sold":false,"hold":false},{"no":"포카 #32","cat":"포토카드","catkey":"pc","img":"images/pc32.jpg","name":"포토카드 4장 세트","memo":"프린트 셔츠","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5625,"sold":false,"hold":false},{"no":"포카 #33","cat":"포토카드","catkey":"pc","img":"images/pc33.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 교복","mem":["쵸단","마젠타","히나","시연"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"마운틴듀 콜라보 교복(블랙 수트) 착장 개인 4종입니다. 카드마다 멤버 이름이 인쇄되어 있어요.","src":5624,"sold":true,"hold":false},{"no":"포카 #34","cat":"포토카드","catkey":"pc","img":"images/pc34.jpg","name":"포토카드 4장 세트","memo":"라이트 블루 셔츠","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5626,"sold":false,"hold":false},{"no":"포카 #35","cat":"포토카드","catkey":"pc","img":"images/pc35.jpg","name":"포토카드 4장 세트","memo":"플라워 · 오프숄더","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5628,"sold":false,"hold":false},{"no":"포카 #36","cat":"포토카드","catkey":"pc","img":"images/pc36.jpg","name":"포토카드 4장 세트","memo":"화이트 니트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5627,"sold":false,"hold":false},{"no":"포카 #37","cat":"포토카드","catkey":"pc","img":"images/pc37.jpg","name":"포토카드 4장 세트","memo":"데님 · 프린트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5629,"sold":false,"hold":false},{"no":"포카 #38","cat":"포토카드","catkey":"pc","img":"images/pc38.jpg","name":"포토카드 4장 세트","memo":"핑크 풍선 · 기타","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5630,"sold":false,"hold":false},{"no":"포카 #39","cat":"포토카드","catkey":"pc","img":"images/pc39.jpg","name":"포토카드 4장 세트","memo":"블랙 수트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5631,"sold":false,"hold":false},{"no":"포카 #40","cat":"포토카드","catkey":"pc","img":"images/pc40.jpg","name":"포토카드 2장","memo":"베이비 · 화이트","mem":["히나","시연"],"series":"기타","cards":2,"unit":1500,"set":null,"pnote":null,"tags":[],"desc":"빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5632,"sold":false,"hold":false},{"no":"포카 #41","cat":"포토카드","catkey":"pc","img":"images/pc41.jpg","name":"포토카드 4장 세트","memo":"핑크 · 베이지","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5633,"sold":false,"hold":false},{"no":"포카 #42","cat":"포토카드","catkey":"pc","img":"images/pc42.jpg","name":"포토카드 4장 세트","memo":"팝업 특전","mem":["단체·유닛"],"series":"팝업 특전","cards":4,"unit":2500,"set":null,"pnote":"장당 2,500원 · 세트 할인 없음 (팝업 특전)","tags":["특전·레어","세트 할인 없음"],"desc":"팝업스토어 구매 특전 포토카드 4종입니다. 구성: QR코드. / 기타즈☆ / 냥멍즈. / 단체(Happy Birthday). 구하기 어려운 특전이라 세트 할인 없이 장당 2,500원입니다.","src":5634,"sold":true,"hold":false},{"no":"포카 #43","cat":"포토카드","catkey":"pc","img":"images/pc43.jpg","name":"포토카드 4장 세트","memo":"핑크 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5637,"sold":false,"hold":false},{"no":"포카 #44","cat":"포토카드","catkey":"pc","img":"images/pc44.jpg","name":"포토카드 4장 세트","memo":"생일 · 옐로","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5635,"sold":false,"hold":false},{"no":"포카 #45","cat":"포토카드","catkey":"pc","img":"images/pc45.jpg","name":"포토카드 4장 세트","memo":"블랙","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5638,"sold":false,"hold":false},{"no":"포카 #46","cat":"포토카드","catkey":"pc","img":"images/pc46.jpg","name":"포토카드 4장 세트","memo":"옐로 · 그린","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5636,"sold":false,"hold":false},{"no":"ID·렌티큘러 #1","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id01.jpg","name":"MANITO 학생증 ID카드 · 화이트/핑크 4종","memo":"학생증 · 화이트/핑크","mem":["쵸단","마젠타","히나","시연"],"series":"MANITO","cards":4,"unit":1500,"set":5000,"land":false,"tags":[],"desc":"","src":"5597","sold":false,"hold":false},{"no":"ID·렌티큘러 #2","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id02.jpg","name":"MANITO 학생증 ID카드 · 스카이블루 4종","memo":"학생증 · 스카이블루","mem":["쵸단","마젠타","히나","시연"],"series":"MANITO","cards":4,"unit":1500,"set":5000,"land":true,"tags":[],"desc":"","src":"5598","sold":false,"hold":false},{"no":"ID·렌티큘러 #3","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id03.jpg","name":"렌티큘러 카드 · 레드헤어(화이트 비니) 4종","memo":"렌티큘러 · 레드헤어","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"land":false,"tags":["렌티큘러"],"desc":"","src":"5599","sold":false,"hold":false},{"no":"ID·렌티큘러 #4","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id04.jpg","name":"Algorithm's Blossom ID카드 · 레드 버전 4종","memo":"블라썸 · 레드","mem":["마젠타"],"series":"Algorithm's Blossom","cards":4,"unit":1500,"set":5000,"land":true,"tags":[],"desc":"","src":"5600","sold":false,"hold":false},{"no":"ID·렌티큘러 #5","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id05.jpg","name":"렌티큘러 카드 · 블루 선글라스 수트 4종","memo":"렌티큘러 · 블루 수트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"land":false,"tags":["렌티큘러"],"desc":"","src":"5603","sold":false,"hold":false},{"no":"ID·렌티큘러 #6","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id06.jpg","name":"Algorithm's Blossom ID카드 · 수트 버전 4종","memo":"블라썸 · 수트","mem":["쵸단","마젠타","히나","시연"],"series":"Algorithm's Blossom","cards":4,"unit":1500,"set":5000,"land":true,"tags":[],"desc":"수트 버전 4종입니다. 좌상 쵸단 · 우상 마젠타 · 좌하 히나 · 우하 시연 순서예요.","src":"5604","sold":false,"hold":false},{"no":"네컷 #1","cat":"네컷사진","catkey":"cut","img":"images/cut01.jpg","name":"MANITO 교복 네컷사진 · 마젠타","memo":"교복 4컷","mem":["마젠타"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5582","sold":false,"hold":false},{"no":"네컷 #2","cat":"네컷사진","catkey":"cut","img":"images/cut02.jpg","name":"MANITO 교복 네컷사진 · 시연","memo":"교복 4컷","mem":["시연"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5583","sold":false,"hold":false},{"no":"네컷 #3","cat":"네컷사진","catkey":"cut","img":"images/cut03.jpg","name":"MANITO 교복 네컷사진 · 히나","memo":"교복 4컷","mem":["히나"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5584","sold":false,"hold":false},{"no":"네컷 #4","cat":"네컷사진","catkey":"cut","img":"images/cut04.jpg","name":"MANITO 치어리더 세로 네컷 · 쵸단 · 마젠타 (2종)","memo":"치어리더 세로 4컷 2종","mem":["쵸단","마젠타"],"series":"MANITO","cards":2,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5585","sold":false,"hold":false},{"no":"네컷 #5","cat":"네컷사진","catkey":"cut","img":"images/cut05.jpg","name":"MANITO 치어리더 세로 네컷 · 히나 · 시연 (2종)","memo":"치어리더 세로 4컷 2종","mem":["히나","시연"],"series":"MANITO","cards":2,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5586","sold":false,"hold":false}];
+const GOODS = [{"no":"피켓 #1","cat":"응원 피켓","catkey":"pk","img":"images/pk1.jpg","name":"4멤버 응원 이미지 피켓 (미니 피켓 키링 포함)","memo":"쵸단 · 마젠타 · 히나 · 시연","mem":["쵸단","마젠타","히나","시연"],"series":"응원 피켓","cards":4,"unit":18000,"set":null,"tags":["4종"],"src":"5639","desc":"쵸단 · 마젠타 · 히나 · 시연 4명 라운드 피켓입니다. 손잡이 끝에 같은 사진의 미니 피켓 키링이 달려 있어요. 가격은 개당입니다.","sold":false,"hold":false,"holdMembers":[]},{"no":"피켓 #2","cat":"응원 피켓","catkey":"pk","img":"images/pk2.jpg","name":"우비 버전 응원 이미지 피켓 (히나·마젠타 2종)","memo":"우비 · 레인코트 버전","mem":["히나","마젠타"],"series":"응원 피켓","cards":2,"unit":15000,"set":null,"tags":["2종"],"src":"5640","desc":"우비(레인코트) 버전 라운드 피켓 히나 · 마젠타 2종입니다. 가격은 개당입니다.","sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #1","cat":"포토카드","catkey":"pc","img":"images/pc01.jpg","name":"불꽃놀이 버전 포토카드 2장","memo":"불꽃놀이 · 쵸단·시연","mem":["쵸단","시연"],"series":"팝업 특전","cards":2,"unit":15000,"set":null,"pnote":"장당 15,000원 · 세트 할인 없음 (팝업 특전)","tags":["특전·레어","세트 할인 없음"],"desc":"불꽃놀이(스파클러) 버전 포토카드 쵸단·시연 2장입니다. 팝업스토어 특전으로 풀린 카드라 세트 할인 없이 장당 15,000원입니다. 빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5590,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #2","cat":"포토카드","catkey":"pc","img":"images/pc02.jpg","name":"포토카드 4장 세트","memo":"교복 · 네이비","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5588,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #3","cat":"포토카드","catkey":"pc","img":"images/pc03.jpg","name":"포토카드 4장 세트","memo":"토끼 후드 · 네이비","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5589,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #4","cat":"포토카드","catkey":"pc","img":"images/pc04.jpg","name":"포토카드 4장 세트","memo":"베레모 · 세일러","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5591,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #5","cat":"포토카드","catkey":"pc","img":"images/pc05.jpg","name":"포토카드 4장 세트","memo":"교복 · 넥타이","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5592,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #6","cat":"포토카드","catkey":"pc","img":"images/pc06.jpg","name":"포토카드 4장 세트","memo":"교복 · 회색 재킷","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5594,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #7","cat":"포토카드","catkey":"pc","img":"images/pc07.jpg","name":"포토카드 4장 세트","memo":"교복 · 조끼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5593,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #8","cat":"포토카드","catkey":"pc","img":"images/pc08.jpg","name":"포토카드 4장 세트","memo":"화이트 · 퍼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5595,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #9","cat":"포토카드","catkey":"pc","img":"images/pc09.jpg","name":"포토카드 4장 세트","memo":"블랙 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5587,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #10","cat":"포토카드","catkey":"pc","img":"images/pc10.jpg","name":"포토카드 4장 세트","memo":"교복 · 퍼 후드","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5596,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #11","cat":"포토카드","catkey":"pc","img":"images/pc11.jpg","name":"포토카드 4장 세트","memo":"블랙 의상","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5605,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #12","cat":"포토카드","catkey":"pc","img":"images/pc12.jpg","name":"포토카드 4장 세트","memo":"마젠타 · 화이트","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5601,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #13","cat":"포토카드","catkey":"pc","img":"images/pc13.jpg","name":"포토카드 4장 세트","memo":"마젠타 · 화이트 티","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5602,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #14","cat":"포토카드","catkey":"pc","img":"images/pc14.jpg","name":"포토카드 4장 세트","memo":"블랙 정장 · 넥타이","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5606,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #15","cat":"포토카드","catkey":"pc","img":"images/pc15.jpg","name":"포토카드 4장 세트","memo":"야구 유니폼","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5607,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #16","cat":"포토카드","catkey":"pc","img":"images/pc16.jpg","name":"포토카드 4장 세트","memo":"블랙 · 크림","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5610,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #17","cat":"포토카드","catkey":"pc","img":"images/pc17.jpg","name":"포토카드 4장 세트","memo":"크림 · 카메라","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5609,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #18","cat":"포토카드","catkey":"pc","img":"images/pc18.jpg","name":"포토카드 4장 세트","memo":"블랙 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5608,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #19","cat":"포토카드","catkey":"pc","img":"images/pc19.jpg","name":"포토카드 4장 세트","memo":"크림 · 플라워","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5611,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #20","cat":"포토카드","catkey":"pc","img":"images/pc20.jpg","name":"포토카드 4장 세트","memo":"네이비 · 화이트 캡","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5612,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #21","cat":"포토카드","catkey":"pc","img":"images/pc21.jpg","name":"포토카드 2장","memo":"다크 · 간식","mem":["쵸단","히나"],"series":"기타","cards":2,"unit":1500,"set":null,"pnote":null,"tags":[],"desc":"빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5623,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #22","cat":"포토카드","catkey":"pc","img":"images/pc22.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 블루","mem":["쵸단","마젠타","히나","시연"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"마운틴듀 콜라보 개인 4종입니다. 마운틴듀 캔과 함께 촬영한 블루 버전.","src":5613,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #23","cat":"포토카드","catkey":"pc","img":"images/pc23.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 단체","mem":["단체·유닛"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"마운틴듀 콜라보 단체 4장입니다. 위 2장은 QWER 로고 단체 포카 2종, 아래 2장은 블랙 착장 \"마운틴듀 공식 모델 QWER\" 단체 포카(동일 2장)입니다.","src":5614,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #24","cat":"포토카드","catkey":"pc","img":"images/pc24.jpg","name":"포토카드 4장 세트","memo":"블루 · 핑크","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5616,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #25","cat":"포토카드","catkey":"pc","img":"images/pc25.jpg","name":"포토카드 4장 세트","memo":"블랙 · 체크","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5618,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #26","cat":"포토카드","catkey":"pc","img":"images/pc26.jpg","name":"포토카드 4장 세트","memo":"올리브 · 그린","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5615,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #27","cat":"포토카드","catkey":"pc","img":"images/pc27.jpg","name":"포토카드 4장 세트","memo":"브라운 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5617,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #28","cat":"포토카드","catkey":"pc","img":"images/pc28.jpg","name":"포토카드 4장 세트","memo":"아웃도어 · 재킷","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5619,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #29","cat":"포토카드","catkey":"pc","img":"images/pc29.jpg","name":"포토카드 4장 세트","memo":"화이트 티 · 레드","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5622,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #30","cat":"포토카드","catkey":"pc","img":"images/pc30.jpg","name":"포토카드 4장 세트","memo":"핑크 · 블랙","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5621,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #31","cat":"포토카드","catkey":"pc","img":"images/pc31.jpg","name":"포토카드 4장 세트","memo":"파스텔","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5620,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #32","cat":"포토카드","catkey":"pc","img":"images/pc32.jpg","name":"포토카드 4장 세트","memo":"프린트 셔츠","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5625,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #33","cat":"포토카드","catkey":"pc","img":"images/pc33.jpg","name":"포토카드 4장 세트","memo":"마운틴듀 교복","mem":["쵸단","마젠타","히나","시연"],"series":"마운틴듀 콜라보","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"마운틴듀 콜라보 교복(블랙 수트) 착장 개인 4종입니다. 카드마다 멤버 이름이 인쇄되어 있어요.","src":5624,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #34","cat":"포토카드","catkey":"pc","img":"images/pc34.jpg","name":"포토카드 4장 세트","memo":"라이트 블루 셔츠","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5626,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #35","cat":"포토카드","catkey":"pc","img":"images/pc35.jpg","name":"포토카드 4장 세트","memo":"플라워 · 오프숄더","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5628,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #36","cat":"포토카드","catkey":"pc","img":"images/pc36.jpg","name":"포토카드 4장 세트","memo":"화이트 니트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5627,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #37","cat":"포토카드","catkey":"pc","img":"images/pc37.jpg","name":"포토카드 4장 세트","memo":"데님 · 프린트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5629,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #38","cat":"포토카드","catkey":"pc","img":"images/pc38.jpg","name":"포토카드 4장 세트","memo":"핑크 풍선 · 기타","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5630,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #39","cat":"포토카드","catkey":"pc","img":"images/pc39.jpg","name":"포토카드 4장 세트","memo":"블랙 수트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5631,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #40","cat":"포토카드","catkey":"pc","img":"images/pc40.jpg","name":"포토카드 2장","memo":"베이비 · 화이트","mem":["히나","시연"],"series":"기타","cards":2,"unit":1500,"set":null,"pnote":null,"tags":[],"desc":"빈칸은 파란 종이로 가려 촬영해 실제 카드는 2장입니다.","src":5632,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #41","cat":"포토카드","catkey":"pc","img":"images/pc41.jpg","name":"포토카드 4장 세트","memo":"핑크 · 베이지","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5633,"sold":false,"hold":false,"holdMembers":[]},{"no":"포카 #42","cat":"포토카드","catkey":"pc","img":"images/pc42.jpg","name":"포토카드 4장 세트","memo":"팝업 특전","mem":["단체·유닛"],"series":"팝업 특전","cards":4,"unit":2500,"set":null,"pnote":"장당 2,500원 · 세트 할인 없음 (팝업 특전)","tags":["특전·레어","세트 할인 없음"],"desc":"팝업스토어 구매 특전 포토카드 4종입니다. 구성: QR코드. / 기타즈☆ / 냥멍즈. / 단체(Happy Birthday). 구하기 어려운 특전이라 세트 할인 없이 장당 2,500원입니다.","src":5634,"sold":true,"hold":false,"holdMembers":[]},{"no":"포카 #43","cat":"포토카드","catkey":"pc","img":"images/pc43.jpg","name":"포토카드 4장 세트","memo":"핑크 · 화이트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5637,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #44","cat":"포토카드","catkey":"pc","img":"images/pc44.jpg","name":"포토카드 4장 세트","memo":"생일 · 옐로","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5635,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #45","cat":"포토카드","catkey":"pc","img":"images/pc45.jpg","name":"포토카드 4장 세트","memo":"블랙","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5638,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"포카 #46","cat":"포토카드","catkey":"pc","img":"images/pc46.jpg","name":"포토카드 4장 세트","memo":"옐로 · 그린","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"pnote":null,"tags":[],"desc":"","src":5636,"sold":false,"hold":false,"holdMembers":["마젠타"]},{"no":"ID·렌티큘러 #1","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id01.jpg","name":"MANITO 학생증 ID카드 · 화이트/핑크 4종","memo":"학생증 · 화이트/핑크","mem":["쵸단","마젠타","히나","시연"],"series":"MANITO","cards":4,"unit":1500,"set":5000,"land":false,"tags":[],"desc":"","src":"5597","sold":false,"hold":false,"holdMembers":[]},{"no":"ID·렌티큘러 #2","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id02.jpg","name":"MANITO 학생증 ID카드 · 스카이블루 4종","memo":"학생증 · 스카이블루","mem":["쵸단","마젠타","히나","시연"],"series":"MANITO","cards":4,"unit":1500,"set":5000,"land":true,"tags":[],"desc":"","src":"5598","sold":false,"hold":false,"holdMembers":[]},{"no":"ID·렌티큘러 #3","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id03.jpg","name":"렌티큘러 카드 · 레드헤어(화이트 비니) 4종","memo":"렌티큘러 · 레드헤어","mem":["마젠타"],"series":"기타","cards":4,"unit":1500,"set":5000,"land":false,"tags":["렌티큘러"],"desc":"","src":"5599","sold":false,"hold":false,"holdMembers":[]},{"no":"ID·렌티큘러 #4","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id04.jpg","name":"Algorithm's Blossom ID카드 · 레드 버전 4종","memo":"블라썸 · 레드","mem":["마젠타"],"series":"Algorithm's Blossom","cards":4,"unit":1500,"set":5000,"land":true,"tags":[],"desc":"","src":"5600","sold":false,"hold":false,"holdMembers":[]},{"no":"ID·렌티큘러 #5","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id05.jpg","name":"렌티큘러 카드 · 블루 선글라스 수트 4종","memo":"렌티큘러 · 블루 수트","mem":["쵸단","마젠타","히나","시연"],"series":"기타","cards":4,"unit":1500,"set":5000,"land":false,"tags":["렌티큘러"],"desc":"","src":"5603","sold":false,"hold":false,"holdMembers":[]},{"no":"ID·렌티큘러 #6","cat":"ID카드·렌티큘러","catkey":"id","img":"images/id06.jpg","name":"Algorithm's Blossom ID카드 · 수트 버전 4종","memo":"블라썸 · 수트","mem":["쵸단","마젠타","히나","시연"],"series":"Algorithm's Blossom","cards":4,"unit":1500,"set":5000,"land":true,"tags":[],"desc":"수트 버전 4종입니다. 좌상 쵸단 · 우상 마젠타 · 좌하 히나 · 우하 시연 순서예요.","src":"5604","sold":false,"hold":false,"holdMembers":[]},{"no":"네컷 #1","cat":"네컷사진","catkey":"cut","img":"images/cut01.jpg","name":"MANITO 교복 네컷사진 · 마젠타","memo":"교복 4컷","mem":["마젠타"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5582","sold":false,"hold":false,"holdMembers":[]},{"no":"네컷 #2","cat":"네컷사진","catkey":"cut","img":"images/cut02.jpg","name":"MANITO 교복 네컷사진 · 시연","memo":"교복 4컷","mem":["시연"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5583","sold":false,"hold":false,"holdMembers":[]},{"no":"네컷 #3","cat":"네컷사진","catkey":"cut","img":"images/cut03.jpg","name":"MANITO 교복 네컷사진 · 히나","memo":"교복 4컷","mem":["히나"],"series":"MANITO","cards":1,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5584","sold":false,"hold":false,"holdMembers":[]},{"no":"네컷 #4","cat":"네컷사진","catkey":"cut","img":"images/cut04.jpg","name":"MANITO 치어리더 세로 네컷 · 쵸단 · 마젠타 (2종)","memo":"치어리더 세로 4컷 2종","mem":["쵸단","마젠타"],"series":"MANITO","cards":2,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5585","sold":false,"hold":false,"holdMembers":[]},{"no":"네컷 #5","cat":"네컷사진","catkey":"cut","img":"images/cut05.jpg","name":"MANITO 치어리더 세로 네컷 · 히나 · 시연 (2종)","memo":"치어리더 세로 4컷 2종","mem":["히나","시연"],"series":"MANITO","cards":2,"unit":1500,"set":null,"tags":[],"desc":"MANITO 앨범 구성품 네컷사진입니다. 장당 1,500원.","src":"5586","sold":false,"hold":false,"holdMembers":[]}];
 
 const PRICE_NOTE = {pk:'개당 가격', pc:'장당 1,500원 · 4장 세트 5,000원', id:'장당 1,500원 · 4장 세트 5,000원', cut:'장당 1,500원'};
 const priceNote = g => g.pnote || PRICE_NOTE[g.catkey];
@@ -323,10 +337,22 @@ let curIdx=-1, cart=[];   // cart: {no, name, opt, unit, qty}
 
 const $ = s => document.querySelector(s);
 const gidx = no => GOODS.findIndex(g => g.no === no);
+/* 부분 예약: 카드는 팔리고 있지만 일부 멤버만 예약중 */
+const heldOf = g => g.holdMembers || [];
+const isPartHold = g => !g.sold && !g.hold && heldOf(g).length > 0;
+function withJosa(arr){          /* '가·나·다' + 은/는 */
+  const s = arr.join('·');
+  const c = (arr[arr.length-1] || '').slice(-1).charCodeAt(0);
+  const hasJong = c >= 0xAC00 && c <= 0xD7A3 ? (c - 0xAC00) % 28 !== 0 : false;
+  return s + (hasJong ? '은' : '는');
+}
 
 /* ── 필터 칩 ─────────────────────────── */
 function cntCat(k){ return k==='전체' ? GOODS.length : GOODS.filter(g=>g.cat===k).length; }
-function cntMem(k){ return k==='전체' ? GOODS.length : GOODS.filter(g=>g.mem.includes(k)).length; }
+function cntMem(k){
+  if(k==='전체') return GOODS.length;
+  return GOODS.filter(g=>g.mem.includes(k) && !heldOf(g).includes(k)).length;
+}
 function cntSer(k){ return k==='전체' ? GOODS.length : GOODS.filter(g=>g.series===k).length; }
 
 function chipHtml(k, label, n, on, cls){
@@ -348,7 +374,7 @@ function renderFilters(){
 function list(){
   let a = GOODS.slice();
   if(fcat!=='전체') a = a.filter(g=>g.cat===fcat);
-  if(fmem!=='전체') a = a.filter(g=>g.mem.includes(fmem));
+  if(fmem!=='전체') a = a.filter(g=>g.mem.includes(fmem) && !heldOf(g).includes(fmem));
   if(fser!=='전체') a = a.filter(g=>g.series===fser);
   if(hideSold) a = a.filter(g=>!g.sold && !g.hold);
   if(q){
@@ -381,19 +407,26 @@ function tagsFor(g){
 }
 
 function priceLabel(g){
+  if(isPartHold(g)) return `${won(g.unit)}<small>원 / 장</small>`;
   if(g.set) return `${won(g.set)}<small>원 / 4장</small>`;
   return `${won(g.unit)}<small>원${g.catkey==='pk'?' / 개':' / 장'}</small>`;
 }
 
 function cardHtml(g){
-  const st = g.sold?'is-sold':(g.hold?'is-hold':'');
+  const st = g.sold?'is-sold':(g.hold?'is-hold':(isPartHold(g)?'is-phold':''));
   const badgeCls = {pk:'pk',pc:'pc',id:'id',cut:'cut'}[g.catkey];
   const catShort = {pk:'피켓',pc:'포토카드',id:'ID·렌티큘러',cut:'네컷'}[g.catkey];
+  const part = isPartHold(g);
+  const act = g.sold ? '<span class="soldtag">판매완료</span>'
+    : g.hold ? '<span class="holdtag">예약중</span>'
+    : part ? `<button class="selbtn" data-add="${g.no}" aria-label="남은 멤버 고르기">선택</button>`
+    : '<button class="add" data-add="'+g.no+'" aria-label="담기">+</button>';
   return `<article class="card ${st}" data-no="${g.no}">
     <div class="thumb${g.land?' land':''}">
       <img src="${g.img}" alt="${g.no} ${g.name}" loading="lazy" decoding="async">
       <span class="num">${g.no}</span>
       <span class="badge ${badgeCls}">${catShort}</span>
+      ${part?`<span class="pholdbadge">${heldOf(g).join('·')} 예약중</span>`:''}
       <div class="tagrow">${tagsFor(g)}</div>
     </div>
     <div class="body">
@@ -401,7 +434,7 @@ function cardHtml(g){
       <div class="memo">${g.memo||''}</div>
       <div class="row">
         <div class="price">${priceLabel(g)}</div>
-        ${g.sold?'<span class="soldtag">판매완료</span>':(g.hold?'<span class="holdtag">예약중</span>':'<button class="add" data-add="'+g.no+'" aria-label="담기">+</button>')}
+        ${act}
       </div>
     </div>
   </article>`;
@@ -428,10 +461,24 @@ function render(){
 function stLabel(g){
   if(g.sold) return ['sold','판매완료'];
   if(g.hold) return ['hold','예약중'];
+  if(isPartHold(g)) return ['hold','일부 예약중'];
   return ['','판매중'];
 }
 function optBtns(g){
   const b = [];
+  if(isPartHold(g)){
+    /* 부분 예약: 4장 세트 불가, 남은 멤버만 낱장으로 */
+    const held = heldOf(g);
+    const unitMems = g.mem.filter(m => !held.includes(m));
+    b.push(`<button class="opt off setoff" disabled><span>4장 세트 ${won(g.set || g.unit*4)}원</span><small>${held.join('·')} 예약중 · 선택 불가</small></button>`);
+    unitMems.forEach((m, idx)=>{
+      b.push(`<button class="opt mem${idx===0?' on':''}" data-opt="낱장 · ${m}" data-unit="${g.unit}"><span>${m}</span><small>${won(g.unit)}원 · 낱장</small></button>`);
+    });
+    held.forEach(m=>{
+      b.push(`<button class="opt mem off" disabled><span>${m} (예약중)</span><small>구매 불가</small></button>`);
+    });
+    return b.join('');
+  }
   if(g.catkey==='pk'){
     b.push(`<button class="opt on" data-opt="개" data-unit="${g.unit}"><span>${won(g.unit)}원</span><small>개당</small></button>`);
     if(g.cards>1) b.push(`<button class="opt" data-opt="${g.cards}종 세트" data-unit="${g.unit*g.cards}"><span>${won(g.unit*g.cards)}원</span><small>${g.cards}종 일괄</small></button>`);
@@ -440,6 +487,11 @@ function optBtns(g){
     b.push(`<button class="opt ${g.set?'':'on'}" data-opt="낱장" data-unit="${g.unit}"><span>${won(g.unit)}원</span><small>장당</small></button>`);
   }
   return b.join('');
+}
+function priceHead(g){
+  if(isPartHold(g)) return `<b>${won(g.unit)}원</b><span>낱장 기준 · ${heldOf(g).join('·')} 예약중 (4장 세트 불가)</span>`;
+  if(g.set) return `<b>${won(g.set)}원</b><span>4장 세트 기준 · 낱장 ${won(g.unit)}원</span>`;
+  return `<b>${won(g.unit)}원</b><span>${priceNote(g)}</span>`;
 }
 function openModal(i){
   const a = list(); if(i<0||i>=a.length) return;
@@ -464,7 +516,7 @@ function openModal(i){
         ${(g.tags||[]).filter(t=>t!==g.series).map(t=>`<span class="sg rare">${t}</span>`).join('')}
       </div>
       <h2>${g.name}</h2>
-      <div class="priceline"><b>${g.set?won(g.set)+'원':won(g.unit)+'원'}</b><span>${g.set?'4장 세트 기준 · 낱장 '+won(g.unit)+'원':priceNote(g)}</span></div>
+      <div class="priceline">${priceHead(g)}</div>
       ${g.desc?`<p class="desc">${g.desc}</p>`:''}
       <dl class="spec">
         <dt>구분</dt><dd>${g.cat} · ${g.series}</dd>
@@ -472,6 +524,7 @@ function openModal(i){
         <dt>구성</dt><dd>${g.cards}장${g.catkey==='pk'?' (종)':''}${posNote?' · '+posNote:''}</dd>
         <dt>거래</dt><dd>정릉동 직거래 / 반값택배 선불 2,000원</dd>
       </dl>
+      ${isPartHold(g)?`<div class="holdnote">이 포토카드는 <b>${heldOf(g).join('·')}만 예약중</b>이에요 — 4장 세트(${won(g.set||g.unit*4)}원)로는 담을 수 없고, ${withJosa(g.mem.filter(m=>!heldOf(g).includes(m)))} <b>낱장(장당 ${won(g.unit)}원)</b>으로 담을 수 있어요. 예약이 취소되면 ${heldOf(g).join('·')}도 다시 판매됩니다.</div>`:''}
       ${(g.sold||g.hold)?'':`<div class="opts" id="opts">${optBtns(g)}</div>
       <div class="cta">
         <button class="primary" id="addBtn">견적에 담기</button>
@@ -490,12 +543,14 @@ function openModal(i){
   if(opts){
     opts.querySelectorAll('.opt').forEach(b=>{
       b.onclick = () => {
+        if(b.disabled) return;
         opts.querySelectorAll('.opt').forEach(o=>o.classList.remove('on'));
         b.classList.add('on');
       };
     });
     sheet.querySelector('#addBtn').onclick = () => {
       const on = opts.querySelector('.opt.on');
+      if(!on || on.disabled) return;
       addToCart(g, on.dataset.opt, Number(on.dataset.unit));
       closeModal(); flashBar();
     };
@@ -511,6 +566,7 @@ function defaultOpt(g){
 }
 function quickAdd(no){
   const g = GOODS[gidx(no)]; if(!g || g.sold || g.hold) return;
+  if(isPartHold(g)){ openModal(list().findIndex(x=>x.no===g.no)); return; }   // 남은 멤버를 골라야 함
   const [opt, unit] = defaultOpt(g);
   addToCart(g, opt, unit); flashBar();
 }
@@ -612,19 +668,23 @@ $('#q').oninput = e => {
   render();
 };
 $('#qclr').onclick = () => { $('#q').value=''; q=''; $('#searchbox').classList.remove('has'); render(); };
+const nSold = GOODS.filter(g=>g.sold).length;
+const nHold = GOODS.filter(g=>g.hold).length;
+const nPart = GOODS.filter(g=>isPartHold(g)).length;
+const nOn = GOODS.length - nSold - nHold;
+$('#stsum').innerHTML = `판매중 <b class="on">${nOn}</b>`
+  + (nPart ? ` <span class="stph">(일부 예약중 ${nPart})</span>` : '')
+  + ` · 판매완료 <b>${nSold}</b>`
+  + (nHold ? ` · 예약중 <b>${nHold}</b>` : '');
+const soldWord = nHold ? '판매완료·예약중' : '판매완료';
+$('#soldT').textContent = soldWord + ' 숨기기';
 $('#soldT').onclick = () => {
   hideSold = !hideSold;
   $('#soldT').classList.toggle('on', hideSold);
-  $('#soldT').textContent = hideSold ? '판매완료·예약중 보기' : '판매완료·예약중 숨기기';
+  $('#soldT').textContent = soldWord + (hideSold ? ' 보기' : ' 숨기기');
   render();
 };
 $('#barBtn').onclick = openQuote;
-
-const nSold = GOODS.filter(g=>g.sold).length;
-const nHold = GOODS.filter(g=>g.hold).length;
-const nOn = GOODS.length - nSold - nHold;
-$('#stsum').innerHTML = `판매중 <b class="on">${nOn}</b> · 판매완료 <b>${nSold}</b>`
-  + (nHold ? ` · 예약중 <b>${nHold}</b>` : '');
 $('#subline').textContent = `응원 피켓 · 포토카드 · ID카드 · 네컷사진 · 총 ${GOODS.length}개`;
 renderFilters(); render(); renderBar();
 </script>
